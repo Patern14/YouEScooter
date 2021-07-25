@@ -102,7 +102,7 @@ export function TopCars() {
       console.log("Error: ", err);
     });
 
-    await wait(5000);   //TEST Spinner
+    //await wait(5000);   //TEST Spinner
 
     console.log("Cars: ", cars);
     if (cars) setTopCars(cars);
