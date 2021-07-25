@@ -1,7 +1,5 @@
 # DB Param
-username
-password
-dburl
+ormconfig.json
 
 # compiled output
 /dist
