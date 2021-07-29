@@ -16,6 +16,8 @@ import { createSelector } from "reselect";
 import { makeSelectTopCars } from "./selectors";
 import MoonLoader from "react-spinners/MoonLoader";
 
+/* Commented elements to avoid empty carousel if no DB connection */
+
 const TopCarsContainer = styled.div`
   ${tw`
     max-w-screen-lg
@@ -102,14 +104,14 @@ export function TopCars() {
       console.log("Error: ", err);
     });
 
-    //await wait(5000);   //TEST Spinner
+    //await wait(1000);   //TEST Spinner
 
     console.log("Cars: ", cars);
     if (cars) setTopCars(cars);
     setLoading(false);
   };
 
-  /* const testCar: ICar = {
+  const testCar: ICar = {
     name: "Audi S3 Car",
     mileage: "10k",
     thumbnailSrc:
@@ -129,20 +131,20 @@ export function TopCars() {
     monthlyPrice: 1500,
     gearType: "Auto",
     gas: "Petrol",
-  }; */
+  };
 
   useEffect(() => {
     fetchTopCars();
   }, []);
 
-  const isEmptyTopCars = !topCars || topCars.length === 0;
+  //const isEmptyTopCars = !topCars || topCars.length === 0;
 
-  const cars =
+  /* const cars =
     (!isEmptyTopCars &&
       topCars.map((car) => <Car {...car} thumbnailSrc={car.thumbnailUrl} />)) ||
-    [];
+    []; */
 
-  const numberOfDots = isMobile ? cars.length : Math.ceil(cars.length / 3);
+  //const numberOfDots = isMobile ? cars.length : Math.ceil(cars.length / 3);
 
   return (
     <TopCarsContainer>
@@ -152,13 +154,20 @@ export function TopCars() {
           <MoonLoader loading size={50} />
         </LoadingContainer>
       )}
-      {isEmptyTopCars && !isLoading && <EmptyCars>No Cars To Show!</EmptyCars>}
-      {!isEmptyTopCars && !isLoading && (
+      {/* {isEmptyTopCars && !isLoading && <EmptyCars>No Cars To Show!</EmptyCars>}
+      {!isEmptyTopCars && !isLoading && ( */}
         <CarsContainer>
           <Carousel
             value={current}
             onChange={setCurrent}
-            slides={cars}
+            //slides={cars}
+            slides={[
+              <Car {...testCar} />,
+              <Car {...testCar2} />,
+              <Car {...testCar} />,
+              <Car {...testCar2} />,
+              <Car {...testCar} />
+            ]}
             plugins={[
               "clickToChange",
               {
@@ -191,9 +200,9 @@ export function TopCars() {
               },
             }}
           />
-          <Dots value={current} onChange={setCurrent} number={numberOfDots} />
+          <Dots value={current} onChange={setCurrent} /* number={numberOfDots} */ />
         </CarsContainer>
-      )}
+      {/* )} */}
     </TopCarsContainer>
   );
 }

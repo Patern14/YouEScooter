@@ -26,3 +26,5 @@ mutation {
     mileage
   }
 }
+
+docker compose build && docker compose up
